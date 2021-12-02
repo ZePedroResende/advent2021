@@ -6,7 +6,7 @@ use structopt::StructOpt;
 
 use crate::day::Day;
 
-const YEAR: u16 = 2020;
+const YEAR: u16 = 2021;
 
 #[derive(StructOpt, Debug)]
 pub struct Init {
@@ -21,6 +21,7 @@ impl Init {
             Ok(())
         } else {
             let session = env::var("AOC_SESSION")?;
+            println!("{:?}", session);
             let client = reqwest::blocking::Client::builder().gzip(true).build()?;
             let mut response = client
                 .get(&self.input_url())
