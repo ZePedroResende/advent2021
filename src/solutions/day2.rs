@@ -40,15 +40,8 @@ impl FromStr for Instruction {
 }
 
 impl Instruction {
-    fn sum(self,(a,b): (u64,u64)) -> (u64,u64){
-        match self.direction {
-            Direction::Forward=>(a+self.amount,b) ,
-            Direction::Down=> (a,b+self.amount) ,
-            Direction::Up=> (a,b-self.amount) ,
-        }
-    }
 
-    fn sum_with_aim(self,(a,b,c): (u64,u64,u64)) -> (u64,u64,u64){
+    fn sum(self,(a,b,c): (u64,u64,u64)) -> (u64,u64,u64){
         match self.direction {
             Direction::Forward=>(a+self.amount,b+ (self.amount * c),c) ,
             Direction::Down=> (a,b,c+self.amount) ,
@@ -62,15 +55,15 @@ impl AoCDay for Code {
         let data = load_file(_input);
         let instructions: Vec<Instruction> = parse_lines::<Instruction>(&data).collect();
 
-        let (horizontal,depth) = instructions.iter().fold((0u64,0u64), |sum, val| val.sum(sum));
-        (horizontal*depth).to_string()
+        let (horizontal,_depth, aim) = instructions.iter().fold((0u64,0u64,0u64), |sum, val| val.sum(sum));
+        (horizontal*aim).to_string()
     }
 
     fn part2(&self, _input: &mut dyn std::io::Read, _extra_args: &[String]) -> String {
         let data = load_file(_input);
         let instructions: Vec<Instruction> = parse_lines::<Instruction>(&data).collect();
 
-        let (horizontal,depth, _aim) = instructions.iter().fold((0u64,0u64,0u64), |sum, val| val.sum_with_aim(sum));
+        let (horizontal,depth, _aim) = instructions.iter().fold((0u64,0u64,0u64), |sum, val| val.sum(sum));
         (horizontal*depth).to_string()
     }
 }
