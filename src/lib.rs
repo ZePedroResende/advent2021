@@ -28,6 +28,13 @@ pub fn load_file(_input: &mut dyn std::io::Read) -> String {
     string
 }
 
+pub fn load_file_bytes(_input: &mut dyn std::io::Read) -> String {
+    let mut string = String::new();
+    _input.read_to_string(&mut string).expect("Unable to read to string");
+
+    string
+}
+
 pub fn parse_lines<T>(input: &str) -> impl Iterator<Item = T> + '_
     where
         T: FromStr + std::fmt::Debug,
