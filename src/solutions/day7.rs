@@ -7,15 +7,6 @@ fn median(numbers: &mut Vec<i32>) -> i32 {
     numbers[mid]
 }
 
-fn cost(pos: &[i32], target: i32) -> i32 {
-    pos.iter()
-        .map(|&p| {
-            let n = (p - target).abs();
-            n * (n + 1) / 2
-        })
-        .sum()
-}
-
 impl AoCDay for Code {
     fn part1(&self, _input: &mut dyn std::io::Read, _extra_argss: &[String]) -> String {
         let data = load_file(_input);
@@ -36,7 +27,7 @@ impl AoCDay for Code {
     }
     fn part2(&self, _input: &mut dyn std::io::Read, _extra_args: &[String]) -> String {
         let data = load_file(_input);
-        let mut numbers: Vec<i32> = data
+        let numbers: Vec<i32> = data
             .lines()
             .nth(0)
             .unwrap()
