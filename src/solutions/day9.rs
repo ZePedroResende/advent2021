@@ -98,8 +98,8 @@ impl AoCDay for Code {
             .collect();
 
         let mut lengths: Vec<usize> = product.iter().map(|basin| basin.len()).collect();
-
-        let o = lengths.sort().iter().rev().take(3).product::<usize>();
+        lengths.sort();
+        let o = lengths.iter().rev().take(3).product::<usize>();
 
         o.to_string()
     }
