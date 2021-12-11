@@ -13,28 +13,24 @@ impl AoCDay for Code {
                 str.chars().fold(0, |mut acc, character: char| {
                     match character {
                         ']' => {
-                            if *vec.last().unwrap() != '[' {
+                            if vec.pop().unwrap() != '[' {
                                 acc += 57;
                             }
-                            vec.pop();
                         }
                         ')' => {
-                            if *vec.last().unwrap() != '(' {
+                            if vec.pop().unwrap() != '(' {
                                 acc += 3;
                             }
-                            vec.pop();
                         }
                         '>' => {
-                            if *vec.last().unwrap() != '<' {
+                            if vec.pop().unwrap() != '<' {
                                 acc += 25137;
                             }
-                            vec.pop();
                         }
                         '}' => {
-                            if *vec.last().unwrap() != '{' {
+                            if vec.pop().unwrap() != '{' {
                                 acc += 1197;
                             }
-                            vec.pop();
                         }
                         c => vec.push(c),
                     }
@@ -57,28 +53,24 @@ impl AoCDay for Code {
                 for character in str.chars() {
                     match character {
                         ']' => {
-                            if *vec.last().unwrap() != '[' {
+                            if vec.pop().unwrap() != '[' {
                                 return 0;
                             }
-                            vec.pop();
                         }
                         ')' => {
-                            if *vec.last().unwrap() != '(' {
+                            if vec.pop().unwrap() != '(' {
                                 return 0;
                             }
-                            vec.pop();
                         }
                         '>' => {
-                            if *vec.last().unwrap() != '<' {
+                            if vec.pop().unwrap() != '<' {
                                 return 0;
                             }
-                            vec.pop();
                         }
                         '}' => {
-                            if *vec.last().unwrap() != '{' {
+                            if vec.pop().unwrap() != '{' {
                                 return 0;
                             }
-                            vec.pop();
                         }
                         c => vec.push(c),
                     }
