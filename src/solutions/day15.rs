@@ -25,6 +25,12 @@ fn djks(matrix: &Vec<Vec<usize>>) -> usize {
     to_visit.push((0, 0, 0));
 
     while let Some((x, y, distance)) = to_visit.pop() {
+        if let Some(current_distance) = distances.get(&(x, y)) {
+            if distance > *current_distance {
+                continue;
+            }
+        }
+
         let neighbours = neighbours((x, y));
 
         for coord in neighbours.iter() {
