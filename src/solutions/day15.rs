@@ -15,7 +15,7 @@ fn neighbours((x, y): (usize, usize)) -> Vec<(usize, usize)> {
     vector
 }
 
-fn djks(matrix: &Vec<Vec<usize>>) -> usize {
+fn djks(matrix: &Vec<Vec<usize>>) -> i64 {
     let end = (matrix.len() - 1, matrix[0].len() - 1);
 
     let mut distances = HashMap::new();
@@ -24,9 +24,13 @@ fn djks(matrix: &Vec<Vec<usize>>) -> usize {
     distances.insert((0, 0), 0);
     to_visit.push((0, 0, 0));
 
-    while let Some((x, y, distance)) = to_visit.pop() {
+    while let Some((distance, x, y)) = to_visit.pop() {
+        if (x, y) == end {
+            return distance * -1;
+        }
+
         if let Some(current_distance) = distances.get(&(x, y)) {
-            if distance > *current_distance {
+            if -distance > *current_distance {
                 continue;
             }
         }
@@ -39,7 +43,7 @@ fn djks(matrix: &Vec<Vec<usize>>) -> usize {
                 continue;
             }
 
-            let new_distance = distance + matrix[*n_x][*n_y];
+            let new_distance = distance.abs() + matrix[*n_x][*n_y] as i64;
 
             let is_shorter = distances
                 .get(coord)
@@ -47,7 +51,7 @@ fn djks(matrix: &Vec<Vec<usize>>) -> usize {
 
             if is_shorter {
                 distances.insert(*coord, new_distance);
-                to_visit.push((*n_x, *n_y, new_distance))
+                to_visit.push((-new_distance, *n_x, *n_y))
             }
         }
     }
