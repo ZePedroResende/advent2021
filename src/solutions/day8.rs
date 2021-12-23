@@ -50,7 +50,7 @@ fn classify(s: &Vec<&str>, map: &mut [HashSet<char>; 10]) {
 impl FromStr for Num {
     type Err = String;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        let line: Vec<Vec<&str>> = s.split(" | ").map(|v| v.split(" ").collect()).collect();
+        let line: Vec<Vec<&str>> = s.split(" | ").map(|v| v.split(' ').collect()).collect();
 
         let mut map: [HashSet<char>; 10] = Default::default();
 
@@ -76,25 +76,24 @@ impl AoCDay for Code {
         let numbers = data
             .lines()
             .map(str::trim)
-            .filter(|l| l.len() > 0)
+            .filter(|l| !l.is_empty())
             .map(|x| {
                 let split: Vec<Vec<&str>> = x
                     .split(" | ")
                     .map(|e| e.split(' ').collect::<Vec<&str>>())
                     .collect();
-                let digits: Vec<&&str> = split[1]
-                    .iter()
-                    .filter(|s| is_part1(s))
-                    .collect::<Vec<&&str>>();
+                
 
-                digits.len() as u64
+                split[1]
+                    .iter()
+                    .filter(|s| is_part1(s)).count() as u64
             })
             .collect::<Vec<u64>>()
             .iter()
             .sum::<u64>()
             .to_string();
 
-        numbers.to_string()
+        numbers
         //let lines: Vec<Line> = parse_lines::<Line>(&data).collect();
     }
     fn part2(&self, _input: &mut dyn std::io::Read, _extra_args: &[String]) -> String {

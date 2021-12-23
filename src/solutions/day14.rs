@@ -29,10 +29,10 @@ fn calculate(rules_str: &str, template: &str, iteration: usize) -> u64 {
     let mut counter_pairs: HashMap<(char, char), u64> = HashMap::new();
 
     for pair in pairs.iter() {
-        *counter_chars.entry(pair.0).or_insert(0) += 1 as u64;
-        *counter_chars.entry(pair.1).or_insert(0) += 1 as u64;
+        *counter_chars.entry(pair.0).or_insert(0) += 1_u64;
+        *counter_chars.entry(pair.1).or_insert(0) += 1_u64;
 
-        *counter_pairs.entry(pair.clone()).or_insert(0) += 1 as u64;
+        *counter_pairs.entry(*pair).or_insert(0) += 1_u64;
     }
 
     for _ in 0..iteration {
@@ -59,13 +59,13 @@ impl AoCDay for Code {
         let data = load_file(_input);
         let (template, rules_str) = data.split_once("\n\n").unwrap();
 
-        calculate(&rules_str, &template, 10).to_string()
+        calculate(rules_str, template, 10).to_string()
     }
 
     fn part2(&self, _input: &mut dyn std::io::Read, _extra_args: &[String]) -> String {
         let data = load_file(_input);
         let (template, rules_str) = data.split_once("\n\n").unwrap();
 
-        calculate(&rules_str, &template, 40).to_string()
+        calculate(rules_str, template, 40).to_string()
     }
 }

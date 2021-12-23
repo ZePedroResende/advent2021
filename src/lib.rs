@@ -43,13 +43,11 @@ pub fn parse_lines<T>(input: &str) -> impl Iterator<Item = T> + '_
     input
         .lines()
         .map(str::trim)
-        .filter(|l| l.len() > 0)
+        .filter(|l| !l.is_empty())
         .map(|l| {
-            l.parse().expect(&format!(
-                "Expected to be able to parse `{:?}` as `{:?}`",
+            l.parse().unwrap_or_else(|_| panic!("Expected to be able to parse `{:?}` as `{:?}`",
                 l,
-                std::any::type_name::<T>()
-            ))
+                std::any::type_name::<T>()))
         })
 }
 
