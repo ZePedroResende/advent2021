@@ -61,10 +61,10 @@ impl AoCDay for Code {
             lines.iter().fold(HashMap::new(), |mut acc, line| {
                 let (a, b) = line.split_once("-").unwrap();
                 acc.entry(a.to_string())
-                    .or_insert(Vec::new())
+                    .or_insert_with(Vec::new)
                     .push(b.to_string());
                 acc.entry(b.to_string())
-                    .or_insert(Vec::new())
+                    .or_insert_with(Vec::new)
                     .push(a.to_string());
 
                 acc
@@ -78,8 +78,8 @@ impl AoCDay for Code {
         let lines: Vec<String> = parse_lines::<String>(&data).collect();
         let graph: HashMap<&str, Vec<&str>> = lines.iter().fold(HashMap::new(), |mut acc, line| {
             let (a, b) = line.split_once("-").unwrap();
-            acc.entry(a).or_insert(Vec::new()).push(b);
-            acc.entry(b).or_insert(Vec::new()).push(a);
+            acc.entry(a).or_insert_with(Vec::new).push(b);
+            acc.entry(b).or_insert_with(Vec::new).push(a);
 
             acc
         });

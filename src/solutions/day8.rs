@@ -12,7 +12,7 @@ struct Num {
     number: i32,
 }
 
-fn classify(s: &Vec<&str>, map: &mut [HashSet<char>; 10]) {
+fn classify(s: &[&str], map: &mut [HashSet<char>; 10]) {
     s.iter().for_each(|l| match l.len() {
         2 => map[1] = l.chars().into_iter().collect(),
 
@@ -82,11 +82,8 @@ impl AoCDay for Code {
                     .split(" | ")
                     .map(|e| e.split(' ').collect::<Vec<&str>>())
                     .collect();
-                
 
-                split[1]
-                    .iter()
-                    .filter(|s| is_part1(s)).count() as u64
+                split[1].iter().filter(|s| is_part1(s)).count() as u64
             })
             .collect::<Vec<u64>>()
             .iter()
