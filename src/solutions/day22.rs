@@ -35,20 +35,6 @@ fn reboot(cubes: &mut HashMap<Coords, i64>, coords: Cube) -> HashMap<Coords, i64
     cubes.clone()
 }
 
-fn subaxis((a, b): (i64, i64), (low, high): (i64, i64)) -> bool {
-    a > high && b < low
-}
-
-fn cube_comparator(
-    c1: &Cube,
-    c2: Cube,
-) -> bool {
-    let xr = subaxis(c1.1, c2.1);
-    let yr = subaxis(c1.2, c2.2);
-    let zr = subaxis(c1.3, c2.3);
-    xr && yr && zr
-}
-
 impl AoCDay for Code {
     fn part1(&self, _input: &mut dyn std::io::Read, _extra_argss: &[String]) -> String {
         let lines = load_file(_input);
@@ -68,17 +54,28 @@ impl AoCDay for Code {
 
                 (status == "on", coords[0], coords[1], coords[2])
             })
-            .collect::<Vec<Cube;
+            .collect::<Vec<Cube>>();
+
+        println!("{}", cubes.len());
 
         let filtered_cubes: Vec<Cube> = cubes
             .into_iter()
-            .filter(|cube| cube_comparator(cube, (true, (-50, 50), (-50, 50), (-50, 50))))
-            .collect::<Vec<Cube;
+            .filter(|cube| {
+                cube.1 .0 <= 50
+                    && cube.1 .1 >= -50
+                    && cube.2 .0 <= 50
+                    && cube.2 .1 >= -50
+                    && cube.3 .0 <= 50
+                    && cube.3 .1 >= -50
+            })
+            .collect::<Vec<Cube>>();
+        println!("{}", filtered_cubes.len());
 
         let out = filtered_cubes
             .iter()
             .fold(HashMap::new(), |mut acc, cube| reboot(&mut acc, *cube));
 
+        println!("{}", out.len());
         out.into_iter()
             .fold(0, |acc, (((x0, x1), (y0, y1), (z0, z1)), value)| {
                 acc + (x1 - x0 + 1) * (y1 - y0 + 1) * (z1 - z0 + 1) * value
@@ -87,6 +84,36 @@ impl AoCDay for Code {
     }
 
     fn part2(&self, _input: &mut dyn std::io::Read, _extra_args: &[String]) -> String {
-        todo!()
+        let lines = load_file(_input);
+
+        let cubes: Vec<Cube> = lines
+            .lines()
+            .map(|l| {
+                let (status, coords) = l.split_once(' ').unwrap();
+                let coords: Vec<(i64, i64)> = coords
+                    .split(',')
+                    .map(|s| {
+                        let values: Vec<i64> =
+                            s[2..].split("..").map(|x| x.parse().unwrap()).collect();
+                        (values[0], values[1])
+                    })
+                    .collect();
+
+                (status == "on", coords[0], coords[1], coords[2])
+            })
+            .collect::<Vec<Cube>>();
+
+        println!("{}", cubes.len());
+
+        let out = cubes
+            .iter()
+            .fold(HashMap::new(), |mut acc, cube| reboot(&mut acc, *cube));
+
+        println!("{}", out.len());
+        out.into_iter()
+            .fold(0, |acc, (((x0, x1), (y0, y1), (z0, z1)), value)| {
+                acc + (x1 - x0 + 1) * (y1 - y0 + 1) * (z1 - z0 + 1) * value
+            })
+            .to_string()
     }
 }
