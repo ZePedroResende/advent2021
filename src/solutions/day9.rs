@@ -1,7 +1,7 @@
 use crate::{load_file, parse_lines, AoCDay};
 use std::collections::HashSet;
 pub struct Code;
-fn check_proyimitx(y: usize, x: usize, vec: &Vec<Vec<u32>>) -> bool {
+fn check_proyimitx(y: usize, x: usize, vec: &[Vec<u32>]) -> bool {
     let mut vector = Vec::new();
     if y != 0 {
         vector.push(vec[y - 1][x]);

@@ -15,7 +15,7 @@ fn neighbours((x, y): (usize, usize)) -> Vec<(usize, usize)> {
     vector
 }
 
-fn djks(matrix: &Vec<Vec<usize>>) -> i64 {
+fn djks(matrix: &[Vec<usize>]) -> i64 {
     let end = (matrix.len() - 1, matrix[0].len() - 1);
 
     let mut distances = HashMap::new();
@@ -26,7 +26,7 @@ fn djks(matrix: &Vec<Vec<usize>>) -> i64 {
 
     while let Some((distance, x, y)) = to_visit.pop() {
         if (x, y) == end {
-            return distance * -1;
+            return -distance;
         }
 
         if let Some(current_distance) = distances.get(&(x, y)) {
