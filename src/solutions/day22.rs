@@ -39,7 +39,9 @@ impl AoCDay for Code {
     fn part1(&self, _input: &mut dyn std::io::Read, _extra_argss: &[String]) -> String {
         let lines = load_file(_input);
 
-        let cubes: Vec<Cube> = lines
+        
+
+        let filtered_cubes: Vec<Cube> = lines
             .lines()
             .map(|l| {
                 let (status, coords) = l.split_once(' ').unwrap();
@@ -54,12 +56,6 @@ impl AoCDay for Code {
 
                 (status == "on", coords[0], coords[1], coords[2])
             })
-            .collect::<Vec<Cube>>();
-
-        println!("{}", cubes.len());
-
-        let filtered_cubes: Vec<Cube> = cubes
-            .into_iter()
             .filter(|cube| {
                 cube.1 .0 <= 50
                     && cube.1 .1 >= -50
@@ -69,13 +65,11 @@ impl AoCDay for Code {
                     && cube.3 .1 >= -50
             })
             .collect::<Vec<Cube>>();
-        println!("{}", filtered_cubes.len());
 
         let out = filtered_cubes
             .iter()
             .fold(HashMap::new(), |mut acc, cube| reboot(&mut acc, *cube));
 
-        println!("{}", out.len());
         out.into_iter()
             .fold(0, |acc, (((x0, x1), (y0, y1), (z0, z1)), value)| {
                 acc + (x1 - x0 + 1) * (y1 - y0 + 1) * (z1 - z0 + 1) * value
@@ -103,13 +97,10 @@ impl AoCDay for Code {
             })
             .collect::<Vec<Cube>>();
 
-        println!("{}", cubes.len());
-
         let out = cubes
             .iter()
             .fold(HashMap::new(), |mut acc, cube| reboot(&mut acc, *cube));
 
-        println!("{}", out.len());
         out.into_iter()
             .fold(0, |acc, (((x0, x1), (y0, y1), (z0, z1)), value)| {
                 acc + (x1 - x0 + 1) * (y1 - y0 + 1) * (z1 - z0 + 1) * value
