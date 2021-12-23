@@ -3,10 +3,10 @@ use std::cmp::{max, min};
 use std::collections::HashMap;
 pub struct Code;
 
-fn reboot(
-    cubes: &mut HashMap<((i64, i64), (i64, i64), (i64, i64)), i64>,
-    coords: (bool, (i64, i64), (i64, i64), (i64, i64)),
-) -> HashMap<((i64, i64), (i64, i64), (i64, i64)), i64> {
+type Coords = ((i64, i64), (i64, i64), (i64, i64));
+type Cube = (bool, (i64, i64), (i64, i64), (i64, i64));
+
+fn reboot(cubes: &mut HashMap<Coords, i64>, coords: Cube) -> HashMap<Coords, i64> {
     let (status, (x0, x1), (y0, y1), (z0, z1)) = coords;
 
     let status_i = if status { 1 } else { -1 };
@@ -40,8 +40,8 @@ fn subaxis((a, b): (i64, i64), (low, high): (i64, i64)) -> bool {
 }
 
 fn cube_comparator(
-    c1: &(bool, (i64, i64), (i64, i64), (i64, i64)),
-    c2: (bool, (i64, i64), (i64, i64), (i64, i64)),
+    c1: &Cube,
+    c2: Cube,
 ) -> bool {
     let xr = subaxis(c1.1, c2.1);
     let yr = subaxis(c1.2, c2.2);
@@ -53,7 +53,7 @@ impl AoCDay for Code {
     fn part1(&self, _input: &mut dyn std::io::Read, _extra_argss: &[String]) -> String {
         let lines = load_file(_input);
 
-        let cubes: Vec<(bool, (i64, i64), (i64, i64), (i64, i64))> = lines
+        let cubes: Vec<Cube> = lines
             .lines()
             .map(|l| {
                 let (status, coords) = l.split_once(' ').unwrap();
@@ -68,16 +68,17 @@ impl AoCDay for Code {
 
                 (status == "on", coords[0], coords[1], coords[2])
             })
-            .collect::<Vec<(bool, (i64, i64), (i64, i64), (i64, i64))>>();
+            .collect::<Vec<Cube;
 
-        let filtered_cubes: Vec<(bool, (i64, i64), (i64, i64), (i64, i64))> = cubes
+        let filtered_cubes: Vec<Cube> = cubes
             .into_iter()
             .filter(|cube| cube_comparator(cube, (true, (-50, 50), (-50, 50), (-50, 50))))
-            .collect::<Vec<(bool, (i64, i64), (i64, i64), (i64, i64))>>();
+            .collect::<Vec<Cube;
 
         let out = filtered_cubes
             .iter()
             .fold(HashMap::new(), |mut acc, cube| reboot(&mut acc, *cube));
+
         out.into_iter()
             .fold(0, |acc, (((x0, x1), (y0, y1), (z0, z1)), value)| {
                 acc + (x1 - x0 + 1) * (y1 - y0 + 1) * (z1 - z0 + 1) * value

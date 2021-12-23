@@ -86,7 +86,7 @@ impl AoCDay for Code {
             .filter(|x| *x > 0)
             .collect();
 
-        outs.sort();
+        outs.sort_unstable();
 
         outs[outs.len() / 2].to_string()
     }

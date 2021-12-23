@@ -113,7 +113,7 @@ impl AoCDay for Code {
 
         for (i, num) in vec.iter().rev().enumerate() {
             //            let tmp = num ^ 0;
-            result.retain(|x: &u8| (x >> i) & 1 == num.clone());
+            result.retain(|x: &u8| (x >> i) & 1 == *num);
             if result.len() == 1 {
                 break;
             }
@@ -121,7 +121,7 @@ impl AoCDay for Code {
 
         for (i, num) in vec.iter().rev().enumerate() {
             //           let tmp = num ^ 1;
-            result2.retain(|x: &u8| (x >> i) & 1 == num.clone());
+            result2.retain(|x: &u8| (x >> i) & 1 == *num);
             if result2.len() == 1 {
                 break;
             }

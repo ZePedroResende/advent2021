@@ -63,13 +63,13 @@ fn parse(b: &[u8], i: &mut usize) -> Instruction {
                     let endbit = *i + c;
                     let mut insts = Vec::new();
                     while *i < endbit {
-                        insts.push(parse(&b, i));
+                        insts.push(parse(b, i));
                     }
                     insts
                 }
                 _ => {
                     let id = calculate(b, i, 11);
-                    (0..id).map(|_| parse(&b, i)).collect()
+                    (0..id).map(|_| parse(b, i)).collect()
                 }
             };
             Instruction::Operator(version, id_, insts)
@@ -108,7 +108,7 @@ impl AoCDay for Code {
     fn part1(&self, _input: &mut dyn std::io::Read, _extra_argss: &[String]) -> String {
         let data = load_file(_input);
         let lines: Vec<String> = parse_lines::<String>(&data).collect();
-        let cords_data: Vec<String> = lines[0].chars().map(|c: char| to_binary(c)).collect();
+        let cords_data: Vec<String> = lines[0].chars().map(to_binary).collect();
         let concat: Vec<u8> = cords_data
             .iter()
             .flat_map(|bits| bits.bytes().map(|b| b - b'0'))
@@ -122,7 +122,7 @@ impl AoCDay for Code {
     fn part2(&self, _input: &mut dyn std::io::Read, _extra_args: &[String]) -> String {
         let data = load_file(_input);
         let lines: Vec<String> = parse_lines::<String>(&data).collect();
-        let cords_data: Vec<String> = lines[0].chars().map(|c: char| to_binary(c)).collect();
+        let cords_data: Vec<String> = lines[0].chars().map(to_binary).collect();
         let concat: Vec<u8> = cords_data
             .iter()
             .flat_map(|bits| bits.bytes().map(|b| b - b'0'))

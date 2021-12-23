@@ -15,7 +15,7 @@ impl FromStr for Day {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let day: u8 = s.parse().map_err(|_| "Day needs to be an integer")?;
-        if day < 1 || day > 25 {
+        if !(1..=25).contains(&day) {
             Err("Day value needs to be between 1 and 25 (inclusive)")
         } else {
             let day = day.try_into().unwrap();

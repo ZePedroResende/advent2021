@@ -23,7 +23,7 @@ impl FromStr for Line {
         let line: Vec<Vec<i64>> = s
             .split(" -> ")
             .map(|v| {
-                v.split(",")
+                v.split(',')
                     .map(|e| e.parse::<i64>().expect("Not a number"))
                     .collect()
             })
@@ -121,7 +121,7 @@ impl AoCDay for Code {
             let points = line.calculate_points();
 
             points.iter().for_each(|point| {
-                let count = map.entry(point.clone()).or_insert(0);
+                let count = map.entry(*point).or_insert(0);
                 *count += 1;
             })
         });
@@ -141,7 +141,7 @@ impl AoCDay for Code {
             let points = line.calculate_points_part2();
 
             points.iter().for_each(|point| {
-                let count = map.entry(point.clone()).or_insert(0);
+                let count = map.entry(*point).or_insert(0);
                 *count += 1;
             })
         });

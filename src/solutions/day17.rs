@@ -51,11 +51,10 @@ impl AoCDay for Code {
             })
         });
 
-        let max_y = coords
-            .into_iter()
-            .filter_map(|(x, y)| check_velocity(x, y))
-            .collect::<Vec<_>>();
+        
 
-        max_y.len().to_string()
+        coords
+            .into_iter()
+            .filter_map(|(x, y)| check_velocity(x, y)).count().to_string()
     }
 }
