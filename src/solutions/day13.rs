@@ -97,8 +97,7 @@ impl AoCDay for Code {
                     print!(" ");
                 }
             });
-
-            print!("\n");
+            println!();
         });
 
         let number = 1;
