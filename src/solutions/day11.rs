@@ -41,9 +41,9 @@ fn calculate(matrix: &mut Vec<Vec<usize>>, c: usize, r: usize) -> usize {
 fn tick(matrix: &mut Vec<Vec<usize>>) -> usize {
     let mut amount = 0;
 
-    for line in 0..10 {
-        for row in 0..10 {
-            matrix[line][row] += 1;
+    for line in matrix.iter_mut() {
+        for item in line.iter_mut() {
+            *item += 1
         }
     }
 
